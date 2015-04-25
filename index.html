@@ -1,0 +1,34 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>SVG Library</title>
+</head>
+<body>
+    <script src="rita.js"></script>
+    <script>
+        var r = new Rita(document.body, 600, 600);
+        r.rect(0, 0, 600, 600, {fill:"rgba(200,200,200,0.5)"});
+        //r.line({x: 100, y: 10}, {x: 200, y: 100}, false, {"stroke-width": 2, stroke: "#789"});
+        var iteration = 0,
+            line = r.path([
+                {command: r.MOVE_TO_ABSOLUTE, x: 10, y: 10},
+                {command: r.LINE_TO_RELATIVE, coords: [{x: 5, y: 10}]},
+                {command: r.LINE_TO_RELATIVE, coords: [{x: -5, y: 15}]},
+                {command: r.LINE_TO_RELATIVE, coords: [{x: -15, y: 20}]}
+            ], {"stroke-width": 4, stroke: "rgba(30,150,250,0.3)"});
+
+        r.addLoop("line", function(){
+            line.setOrigin(100 + iteration, 100 + iteration);
+            line.rotate(iteration * 2);
+            line.translate(iteration, iteration);
+            line.update();
+            if(iteration > 250) {
+                iteration = 0;
+            }
+            iteration++;
+        });
+    </script>
+</body>
+</html>
